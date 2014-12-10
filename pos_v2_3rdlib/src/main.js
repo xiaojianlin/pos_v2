@@ -4,7 +4,6 @@ function printInventory(inputs){
   console.log(inventoryText);
 }
 
-
 function getCartItems(inputs){
   var cartItems = [];
   _.forEach(inputs,function(inputs){
@@ -25,10 +24,10 @@ function getCartItems(inputs){
   return cartItems;
 }
 
-
 function getInventoryText(cartItems){
   return menus = '***<没钱赚商店>购物清单***\n' +
                  '打印时间：' + getCurrentDate + '\n' +
+                 '----------------------\n' +
                  allMenu(cartItems) +
                  '----------------------\n' +
                  '挥泪赠送商品：\n' +
@@ -37,9 +36,6 @@ function getInventoryText(cartItems){
                  money(cartItems) +
                  '**********************' ;
 }
-
-
-
 
 
 
@@ -56,9 +52,7 @@ function getCurrentDate(){
   minute = dateDigitToString(currentDate.getMinutes()),
   second = dateDigitToString(currentDate.getSeconds()),
   formattedDateString = year + '年' + month + '月' + date + '日 ' + hour + ':' + minute + ':' + second;
-
   return formattedDateString;
-
 }
 
 
@@ -67,11 +61,15 @@ function getCurrentDate(){
 
 
 
-function load(items){
-  var loaditem = false ;
-  loaditem =_.find(loadPromotions(),function(trg){
-    return trg === items.item.barcode;
+function load(itemindex){
+  var loadItem = false ;
+  var barcodes = loadPromotions()[0].barcodes ;
+  _.forEach(barcodes, function(trg){
+    if(itemindex.barcode === trg ){
+      loadItem = true ;
+    }
   });
+  return loadItem ;
 }
 
 
@@ -80,14 +78,14 @@ function allMenu(cartItems){
   _.forEach(cartItems,function(items){
   var itemindex = items.item;
   var numbers = items.count;
-  var number = 0 ;
-  if(load(items)){
-    number = numbers - parseInt(numbers/3) ;
+  var number = numbers ;
+  if(load(itemindex)){
+    numbers = numbers - parseInt(numbers/3) ;
   }
   menu += '名称：' + itemindex.name +
-          '，数量：' +numbers + itemindex.unit +
+          '，数量：' +number + itemindex.unit +
           '，单价：' + itemindex.price.toFixed(2) +
-          '(元)，小计：' + itemindex.price*(numbers-number).toFixed(2) + '(元)\n' ;
+          '(元)，小计：' + itemindex.price*numbers.toFixed(2) + '(元)\n' ;
   });
   return menu ;
 }
