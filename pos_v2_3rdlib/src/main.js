@@ -4,7 +4,6 @@ function printInventory(inputs){
   console.log(inventoryText);
 }
 
-
 function getCartItems(inputs){
   var cartItems = [];
   _.forEach(inputs,function(inputs){
@@ -26,8 +25,16 @@ function getCartItems(inputs){
 }
 
 
+
+
 function getInventoryText(cartItems){
-  var inventoryText = 'test2';
-  console.log(inventoryText);
-  return inventoryText;
+  return menus = '***<没钱赚商店>购物清单***\n' +
+                 '打印时间：' + formattedDateString + '\n' +
+                 allMenu(cartItems) +
+                 '----------------------\n' +
+                 '挥泪赠送商品：\n' +
+                 loadMenu(cartItems) +
+                 '----------------------\n' +
+                 money(cartItems) +
+                 '**********************' ;
 }
