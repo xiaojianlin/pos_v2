@@ -4,6 +4,7 @@ function printInventory(inputs){
   console.log(inventoryText);
 }
 
+
 function getCartItems(inputs){
   var cartItems = [];
   _.forEach(inputs,function(inputs){
@@ -20,16 +21,14 @@ function getCartItems(inputs){
   cartItem ? cartItem.count += count :
             cartItems.push({ item: item , count: count });
   });
-  console.log(cartItems);
+//  console.log(cartItems);
   return cartItems;
 }
 
 
-
-
 function getInventoryText(cartItems){
   return menus = '***<没钱赚商店>购物清单***\n' +
-                 '打印时间：' + formattedDateString + '\n' +
+                 '打印时间：' + getCurrentDate + '\n' +
                  allMenu(cartItems) +
                  '----------------------\n' +
                  '挥泪赠送商品：\n' +
@@ -37,4 +36,88 @@ function getInventoryText(cartItems){
                  '----------------------\n' +
                  money(cartItems) +
                  '**********************' ;
+}
+
+
+
+
+
+
+
+function getCurrentDate(){
+  dateDigitToString = function (num) {
+    return num < 10 ? '0' + num : num;
+  };
+  var currentDate = new Date(),
+  year = dateDigitToString(currentDate.getFullYear()),
+  month = dateDigitToString(currentDate.getMonth() + 1),
+  date = dateDigitToString(currentDate.getDate()),
+  hour = dateDigitToString(currentDate.getHours()),
+  minute = dateDigitToString(currentDate.getMinutes()),
+  second = dateDigitToString(currentDate.getSeconds()),
+  formattedDateString = year + '年' + month + '月' + date + '日 ' + hour + ':' + minute + ':' + second;
+
+  return formattedDateString;
+
+}
+
+
+
+
+
+
+
+function load(items){
+  var loaditem = false ;
+  loaditem =_.find(loadPromotions(),function(trg){
+    return trg === items.item.barcode;
+  });
+}
+
+
+function allMenu(cartItems){
+  var menu = '' ;
+  _.forEach(cartItems,function(items){
+  var itemindex = items.item;
+  var numbers = items.count;
+  var number = 0 ;
+  if(load(items)){
+    number = numbers - parseInt(numbers/3) ;
+  }
+  menu += '名称：' + itemindex.name +
+          '，数量：' +numbers + itemindex.unit +
+          '，单价：' + itemindex.price.toFixed(2) +
+          '(元)，小计：' + itemindex.price*(numbers-number).toFixed(2) + '(元)\n' ;
+  });
+  return menu ;
+}
+
+
+function loadMenu(cartItems){
+  var menu2 = 'menu2\n' ;
+  // _.forEach(leadNumbers,function(number, index){
+  //   if (number !== 0 && load(index)){
+  //     menu2 += '名称：' + loadAllItems()[index].name +
+  //     '，数量：' + parseInt(number/3) + loadAllItems()[index].unit + '\n' ;
+  //   }
+  // });
+  return menu2 ;
+}
+
+
+function money(cartItems){
+  var allMoney = 0;
+  var reduceMoney = 0;
+  // _.forEach(leadNumbers,function(number, index){
+  //   var price = loadAllItems()[index].price ;
+  //   if (number!==0 && load(index)){
+  //     allMoney += price*(number-parseInt(number/3)) ;
+  //     reduceMoney += price*parseInt(number/3);
+  //   }
+  //   else {
+  //     allMoney += price*number ;
+  //   }
+  // } ) ;
+  return menu3 = '总计：' + allMoney.toFixed(2) + '(元)\n' +
+  '节省：' + reduceMoney.toFixed(2) + '(元)\n' ;
 }
