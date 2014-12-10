@@ -4,6 +4,7 @@ function printInventory(inputs){
   console.log(inventoryText);
 }
 
+
 function getCartItems(inputs){
   var cartItems = [];
   _.forEach(inputs,function(inputs){
@@ -24,6 +25,7 @@ function getCartItems(inputs){
   return cartItems;
 }
 
+
 function getInventoryText(cartItems){
   return menus = '***<没钱赚商店>购物清单***\n' +
                  '打印时间：' + getCurrentDate + '\n' +
@@ -36,6 +38,7 @@ function getInventoryText(cartItems){
                  money(cartItems) +
                  '**********************' ;
 }
+
 
 function allMenu(cartItems){
   var menu = '' ;
@@ -54,6 +57,7 @@ function allMenu(cartItems){
   return menu ;
 }
 
+
 function load(itemindex){
   var loadItem = false ;
   var barcodes = loadPromotions()[0].barcodes ;
@@ -64,6 +68,7 @@ function load(itemindex){
   });
   return loadItem ;
 }
+
 
 function loadMenu(cartItems){
   var menu2 = '' ;
@@ -78,29 +83,24 @@ function loadMenu(cartItems){
 }
 
 
-
-
-
-
-
 function money(cartItems){
-  var allMoney = 0;
-  var reduceMoney = 0;
-  // _.forEach(leadNumbers,function(number, index){
-  //   var price = loadAllItems()[index].price ;
-  //   if (number!==0 && load(index)){
-  //     allMoney += price*(number-parseInt(number/3)) ;
-  //     reduceMoney += price*parseInt(number/3);
-  //   }
-  //   else {
-  //     allMoney += price*number ;
-  //   }
-  // } ) ;
+  var allMoney = 0 ;
+  var reduceMoney = 0 ;
+  _.forEach(cartItems,function(items){
+    var itemindex = items.item ;
+    var numbers = items.count ;
+    var price = itemindex.price ;
+    if(load(itemindex)){
+      allMoney += price*(numbers-parseInt(numbers/3)) ;
+      reduceMoney += price*parseInt(numbers/3);
+    }
+    else {
+      allMoney += price*numbers ;
+    }
+  });
   return menu3 = '总计：' + allMoney.toFixed(2) + '(元)\n' +
   '节省：' + reduceMoney.toFixed(2) + '(元)\n' ;
 }
-
-
 
 
 
