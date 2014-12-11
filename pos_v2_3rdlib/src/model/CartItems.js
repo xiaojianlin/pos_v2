@@ -1,12 +1,12 @@
 function CartItems(items,count) {
-    this.items = items;
+    this.item = item;
     this.count = count;
 }
 
 
 CartItems.getCartItems = function(inputs) {
   var cartItems = [];
-  _.forEach(inputs,function(inputs){
+  _.forEach(inputs, function(inputs){
     var input = inputs.split('-');
     var barcode = input[0];
     var count = 1 ;
@@ -14,7 +14,7 @@ CartItems.getCartItems = function(inputs) {
       count = parseFloat(input[1]);
     }
   var item = Item.getItem(barcode);
-  var cartItem = _.find(cartItems,function(cartItem){
+  var cartItem = _.find(cartItems, function(cartItem) {
     return barcode === cartItem.item.barcode;
   });
   cartItem ? cartItem.count += count :
