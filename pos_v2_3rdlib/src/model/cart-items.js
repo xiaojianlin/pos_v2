@@ -1,4 +1,4 @@
-function CartItems(items,count) {
+function CartItems(item,count) {
     this.item = item;
     this.count = count;
 }
@@ -13,12 +13,17 @@ CartItems.getCartItems = function(inputs) {
     if(input[1]){
       count = parseFloat(input[1]);
     }
-  var item = Item.getItem(barcode);
-  var cartItem = _.find(cartItems, function(cartItem) {
-    return barcode === cartItem.item.barcode;
-  });
-  cartItem ? cartItem.count += count :
-             cartItems.push({ item: item , count: count });
+
+    var item = Item.getItem(barcode);
+    var cartItem = _.find(cartItems, function(cartItem) {
+      return barcode === cartItem.item.barcode;
+    });
+    if (cartItem) {
+      cartItem.count += count;
+    }
+    else {
+      cartItems.push({ item: item , count: count });
+    }
   });
   return cartItems;
 };
