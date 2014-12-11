@@ -4,11 +4,11 @@ function Promotion(type, barcodes) {
 }
 
 
-Promotion.load = function(itemindex){
+Promotion.load = function(item){
   var loadItem = false ;
   var barcodes = loadPromotions()[0].barcodes ;
-  _.forEach(barcodes, function(trg){
-    if(itemindex.barcode === trg ){
+  _.forEach(barcodes, function(barcode) {
+    if(item.barcode === barcode ){
       loadItem = true ;
     }
   });

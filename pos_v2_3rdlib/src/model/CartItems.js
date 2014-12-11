@@ -4,7 +4,7 @@ function CartItems(items,count) {
 }
 
 
-CartItems.getCartItems = function(inputs){
+CartItems.getCartItems = function(inputs) {
   var cartItems = [];
   _.forEach(inputs,function(inputs){
     var input = inputs.split('-');
@@ -14,11 +14,11 @@ CartItems.getCartItems = function(inputs){
       count = parseFloat(input[1]);
     }
   var item = Item.getItem(barcode);
-  var cartItem=_.find(cartItems,function(cartItem){
+  var cartItem = _.find(cartItems,function(cartItem){
     return barcode === cartItem.item.barcode;
   });
   cartItem ? cartItem.count += count :
-            cartItems.push({ item: item , count: count });
+             cartItems.push({ item: item , count: count });
   });
   return cartItems;
 };

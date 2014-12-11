@@ -3,24 +3,24 @@ function Inventory(cartItems) {
 }
 
 
-Inventory.getInventoryText = function(cartItems){
+Inventory.prototype.getInventoryText = function() {
   return menus = '***<没钱赚商店>购物清单***\n' +
-  '打印时间：' + this.getCurrentDate() + '\n' +
+  '打印时间：' + moment().format('YYYY年MM月DD日 HH:mm:ss') + '\n' +
   '----------------------\n' +
-  this.allMenu(cartItems) +
+  this.allText() +
   '----------------------\n' +
   '挥泪赠送商品：\n' +
-  this.loadMenu(cartItems) +
+  this.loadText() +
   '----------------------\n' +
-  this.money(cartItems) +
+  this.amountText() +
   '**********************' ;
 };
 
 
 
-Inventory.allMenu = function(cartItems){
+Inventory.prototype.allText = function() {
   var menu = '' ;
-  _.forEach(cartItems,function(items){
+  _.forEach(this.cartItems,function(items){
     var itemindex = items.item;
     var numbers = items.count;
     var number = numbers ;
@@ -37,9 +37,9 @@ Inventory.allMenu = function(cartItems){
 
 
 
-Inventory.loadMenu = function(cartItems){
+Inventory.prototype.loadText = function() {
   var menu2 = '' ;
-  _.forEach(cartItems,function(items){
+  _.forEach(this.cartItems,function(items){
     var itemindex = items.item;
     if(Promotion.load(itemindex)){
       menu2 += '名称：' + itemindex.name +
@@ -51,39 +51,21 @@ Inventory.loadMenu = function(cartItems){
 
 
 
-Inventory.money = function(cartItems){
-  var allMoney = 0 ;
-  var reduceMoney = 0 ;
-  _.forEach(cartItems,function(items){
-    var itemindex = items.item ;
+Inventory.prototype.amountText = function() {
+  var allAmount = 0 ;
+  var reduceAmount = 0 ;
+  _.forEach(this.cartItems,function(items){
+    var item = items.item ;
     var numbers = items.count ;
-    var price = itemindex.price ;
-    if(Promotion.load(itemindex)){
-      allMoney += price*(numbers-parseInt(numbers/3)) ;
-      reduceMoney += price*parseInt(numbers/3);
+    var price = item.price ;
+    if(Promotion.load(item)){
+      allAmount += price*(numbers-parseInt(numbers/3)) ;
+      reduceAmount += price*parseInt(numbers/3);
     }
     else {
-      allMoney += price*numbers ;
+      allAmount += price*numbers ;
     }
   });
-  return menu3 = '总计：' + allMoney.toFixed(2) + '(元)\n' +
-  '节省：' + reduceMoney.toFixed(2) + '(元)\n' ;
-};
-
-
-
-
-Inventory.getCurrentDate = function(){
-  dateDigitToString = function (num) {
-    return num < 10 ? '0' + num : num;
-  };
-  var currentDate = new Date(),
-  year = dateDigitToString(currentDate.getFullYear()),
-  month = dateDigitToString(currentDate.getMonth() + 1),
-  date = dateDigitToString(currentDate.getDate()),
-  hour = dateDigitToString(currentDate.getHours()),
-  minute = dateDigitToString(currentDate.getMinutes()),
-  second = dateDigitToString(currentDate.getSeconds()),
-  formattedDateString = year + '年' + month + '月' + date + '日 ' + hour + ':' + minute + ':' + second;
-  return formattedDateString;
+  return menu3 = '总计：' + allAmount.toFixed(2) + '(元)\n' +
+  '节省：' + reduceAmount.toFixed(2) + '(元)\n' ;
 };

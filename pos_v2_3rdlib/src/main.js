@@ -1,5 +1,5 @@
 function printInventory(inputs){
   var cartItems = CartItems.getCartItems(inputs);
-  var inventoryText = Inventory.getInventoryText(cartItems);
-  console.log(inventoryText);
+  var inventory = new Inventory(cartItems);
+  console.log(inventory.getInventoryText());
 }

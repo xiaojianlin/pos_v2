@@ -6,6 +6,6 @@ function Item(barcode, name, unit, price) {
 }
 
 
-Item.getItem = function(barcode){
+Item.getItem = function(barcode) {
   return _.find(loadAllItems(),{barcode : barcode});
 };
