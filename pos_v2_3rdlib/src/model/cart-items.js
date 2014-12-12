@@ -16,7 +16,7 @@ CartItems.getCartItems = function(inputs) {
 
     var item = Item.getItem(barcode);
     var cartItem = _.find(cartItems, function(cartItem) {
-      return barcode === cartItem.item.barcode;
+      return cartItem.item.barcode === barcode;
     });
     if (cartItem) {
       cartItem.count += count;
